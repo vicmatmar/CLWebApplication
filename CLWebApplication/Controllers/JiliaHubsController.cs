@@ -8,21 +8,61 @@ using Microsoft.EntityFrameworkCore;
 using CLWebApp.Models;
 using Microsoft.AspNetCore.Http;
 
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
+
 namespace CLWebApp.Controllers
 {
     public class JiliaHubsController : Controller
     {
         private readonly ManufacturingStore_Context _context;
+        private readonly IHostingEnvironment _hostingEnvironment;
 
-        public JiliaHubsController(ManufacturingStore_Context context)
+        public JiliaHubsController(ManufacturingStore_Context context, IHostingEnvironment hostingEnvironment)
         {
             _context = context;
+            _hostingEnvironment = hostingEnvironment;
         }
 
         public async Task<IActionResult> DownloadFile()
         {
+
+            var jiliaHubs = _context.JiliaHubs.OrderByDescending(j=>j.Timestamp);
+            if (jiliaHubs == null)
+            {
+                return NotFound();
+            }
+
+            string webRootPath = _hostingEnvironment.WebRootPath;
+            string filename = "JiliaHubs.csv";
+            string loc = Path.Combine(webRootPath, filename);
+
+            if (System.IO.File.Exists(loc))
+            {
+                System.IO.File.Delete(loc);
+            }
+
+            var props = typeof(JiliaHubs).GetProperties();
+            using (System.IO.StreamWriter streamWriter = new System.IO.StreamWriter(loc))
+            {
+                foreach(var hub in jiliaHubs)
+                {
+                    string line = "";
+                    foreach (var prop in props)
+                    {
+                        var val = prop.GetValue(hub);
+                        if (val.GetType() == typeof(string))
+                            val = ((string)val).Trim();
+                        line += val + ",";
+                    }
+                    line = line.TrimEnd(',');
+                    streamWriter.WriteLine(line);
+                }
+            }
+
+
             FileUpDownController fileUp = new FileUpDownController();
-            return await fileUp.Download("1.jpg");
+            return await fileUp.Download(filename);
 
         }
         // GET: JiliaHubs

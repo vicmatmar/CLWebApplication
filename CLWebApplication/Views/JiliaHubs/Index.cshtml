@@ -6,11 +6,15 @@
 
 <h2>Index</h2>
 
-<button asp-action="DoenloadFile">Download File</button>
+<form asp-controller="JiliaHubs" asp-action="DownloadFile" method="post">
+    <button type="submit">Download</button>
+</form>
+@*<a asp-action="DownloadFile">Download</a>*@
 
 @*<p>
-    <a asp-action="Create">Create New</a>
+        <a asp-action="Create">Create New</a>
 </p>*@
+
 <table class="table">
     <thead>
         <tr>
