@@ -1,0 +1,77 @@
+﻿@model IEnumerable<CLWebApp.Models.ProductionSite>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+@*<p>
+    <a asp-action="Create">Create New</a>
+</p>*@
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LoadRangeTest)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RunIct)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RunRangeTest)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LoadApplication)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ForceChannel)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Erase)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EnableFirmwareChange)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LoadRangeTest)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RunIct)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RunRangeTest)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LoadApplication)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ForceChannel)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Erase)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EnableFirmwareChange)
+            </td>
+            <td>
+                @*<a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |*@
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> @*|*@
+                @*<a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

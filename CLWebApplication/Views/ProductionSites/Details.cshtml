@@ -1,0 +1,66 @@
+﻿@model CLWebApp.Models.ProductionSite
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ProductionSite</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.LoadRangeTest)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.LoadRangeTest)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.RunIct)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RunIct)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.RunRangeTest)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RunRangeTest)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.LoadApplication)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.LoadApplication)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ForceChannel)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ForceChannel)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Erase)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Erase)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EnableFirmwareChange)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EnableFirmwareChange)
+        </dd>
+    </dl>
+</div>
+<div>
+    @*<a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |*@
+    <a asp-action="Index">Back to List</a>
+</div>
