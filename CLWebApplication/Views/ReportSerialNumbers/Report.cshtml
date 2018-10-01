@@ -2,36 +2,53 @@
 @{
     ViewData["Title"] = "Final Test Report";
 }
+
+<style>
+    .report_header {
+        border: 1px solid black;
+        background-color: white;
+        font-style: italic;
+        font-size: x-large;
+        display: flex;
+        justify-content: space-around
+    }
+
+    .report_sub {
+        border-style: solid;
+        border-width: thin;
+        border-color: gray;
+        font-size: larger;
+        display: flex;
+        justify-content: flex-end
+    }
+
+    .row:nth-child(odd) {
+        background: aliceblue;
+    }
+</style>
+
 <h2>@ViewData["Title"]</h2>
-<br />
+<a asp-action="DownloadFile">Download</a>
 
-@foreach (var item in Model)
-{
-    <h3>
-        @Html.DisplayFor(modelItem => item.Header.TotalCount)  @Html.DisplayFor(modelItem => item.Header.Sku)  @Html.DisplayFor(modelItem => item.Header.ProductName)
-    </h3>
+<div class=" container">
+    @foreach (var item in Model)
+    {
+        <p>
+            <div class="row">
+                <div class="col-lg-2 report_header" style="justify-content:flex-end">Total = @item.Header.TotalCount</div>
+                <div class="col-lg-10 report_header" style="justify-content:center">@item.Header.Sku, @item.Header.ProductName</div>
+            </div>
 
-    <table class="table" border="1">
-        <thead>
-            <tr>
-                <th text-align="right">Count</th>
-                <th>Day</th>
-            </tr>
-        </thead>
-        <tbody>
             @foreach (var subitem in item.Items)
             {
-                <tr>
-                    <td align="right" width="100">
-                        @Html.DisplayFor(s => subitem.TotalCount)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(s => subitem.CreatedDate)
-                    </td>
-                </tr>
+                <div class="row">
+                    <div class="col-lg-2 report_sub" style="align-content:flex-end">@subitem.TotalCount</div>
+                    <div class="col-lg-10 report_sub" style="justify-content:center">@subitem.CreatedDate.ToShortDateString()</div>
+                </div>
             }
-        </tbody>
-    </table>
-    <br />
-}
+        </p>
+    }
+</div>
+
+
 
