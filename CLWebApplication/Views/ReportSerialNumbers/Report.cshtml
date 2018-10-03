@@ -1,6 +1,8 @@
-﻿@model IEnumerable<CLWebApp.Models.FinalTestCount>
+﻿@model FinalTestReport
+
+
 @{
-    ViewData["Title"] = "Final Test Report";
+    ViewData["Title"] = $"Final Test Report. Site {Model.Siteid}, Last {Model.NumberOfDays} days, Time offset {Model.HrOffset} hrs";
 }
 
 <style>
@@ -28,27 +30,53 @@
 </style>
 
 <h2>@ViewData["Title"]</h2>
-<a asp-action="DownloadFile">Download</a>
 
-<div class=" container">
-    @foreach (var item in Model)
-    {
-        <p>
-            <div class="row">
-                <div class="col-lg-2 report_header" style="justify-content:flex-end">Total = @item.Header.TotalCount</div>
-                <div class="col-lg-10 report_header" style="justify-content:center">@item.Header.Sku, @item.Header.ProductName</div>
+<div class="row">
+    <form asp-controller="ReportSerialNumbers" asp-action="ReportPostAsync" method="post">
+        <div class="form-row">
+            <div class="form-group col-sm-4">
+                <label asp-for="Siteid" class="control-label">Sites</label>
+                <select asp-for="Siteid" class="form-control">
+                    <option value="2">CL</option>
+                    <option value="8">Moko</option>
+                </select>
             </div>
-
-            @foreach (var subitem in item.Items)
-            {
-                <div class="row">
-                    <div class="col-lg-2 report_sub" style="align-content:flex-end">@subitem.TotalCount</div>
-                    <div class="col-lg-10 report_sub" style="justify-content:center">@subitem.CreatedDate.ToShortDateString()</div>
-                </div>
-            }
-        </p>
-    }
+            <div class="form-group col-sm-4">
+                <label asp-for="NumberOfDays" class="control-label">Days</label>
+                <input asp-for="NumberOfDays" class="form-control" />
+            </div>
+            <div class="form-group col-sm-4">
+                <label asp-for="HrOffset" class="control-label">Offset</label>
+                <input asp-for="HrOffset" class="form-control" />
+            </div>
+        </div>
+        <div class="form-group col-sm-12">
+            <button type="submit" value="submit" class="form-inline">Report</button>
+        </div>
+    </form>
 </div>
 
-
+@if (Model.FinalTestCounts != null && Model.FinalTestCounts.Length > 0)
+{
+    <div>
+        <a asp-action="DownloadFile">Download</a>
+    </div>
+    <div>
+        @foreach (var item in Model.FinalTestCounts)
+        {
+        <div class="row">
+            <div class="col-sm-9 report_header" style="justify-content:center">@item.Header.Sku, @item.Header.ProductName</div>
+            <div class="col-sm-3 report_header" style="justify-content:flex-end">Total = @item.Header.TotalCount</div>
+        </div>
+            @foreach (var subitem in item.Items)
+            {
+        <div class="row">
+            <div class="col-sm-6 report_sub" style="justify-content:center">@subitem.CreatedDate.ToShortDateString()</div>
+            <div class="col-sm-6 report_sub" style="align-content:flex-end">@subitem.TotalCount</div>
+        </div>
+            }
+            <br />
+        }
+    </div>
+}
 

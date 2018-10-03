@@ -2,22 +2,24 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="col-md-3">
-    <h2>Mfg</h2>
-    <ul>
-        <li><a href="ReportSerialNumbers/Report?siteid=8&number_of_days=10&time_offset_hrs=13">Moko Final Test Report (10 days)</a></li>
-    </ul>
+<div class="row">
+    <div class="col-md-4">
+        <h2>Mfg</h2>
+        <ul>
+            @*<li><a href="ReportSerialNumbers/Report?siteid=8&number_of_days=10&time_offset_hrs=0">Final Test Report</a></li>*@
+            <li><a asp-controller="ReportSerialNumbers" asp-action="ReportFromCookiesAsync">Final Test Report</a></li>
+        </ul>
+    </div>
+    <div class="col-md-4">
+        <h2>Jilia</h2>
+        <ul>
+            <li><a href="JiliaHubs">Hubs</a></li>
+        </ul>
+    </div>
+    <div class="col-md-2">
+        <h2>Other</h2>
+        <ul>
+            <li><a href="http://barscan/#/">Barscan</a></li>
+        </ul>
+    </div>
 </div>
-<div class="col-md-3">
-    <h2>Jilia</h2>
-    <ul>
-        <li><a href="JiliaHubs">Hubs</a></li>
-    </ul>
-</div>
-<div>
-    <h2>Other</h2>
-    <ul>
-        <li><a href="http://barscan/#/">Barscan</a></li>
-    </ul>
-</div>
-
