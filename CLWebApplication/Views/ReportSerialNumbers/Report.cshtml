@@ -6,22 +6,20 @@
 }
 
 <style>
+
     .report_header {
         border: 1px solid black;
         background-color: white;
         font-style: italic;
-        font-size: x-large;
+        font-size: large;
         display: flex;
         justify-content: space-around
     }
 
     .report_sub {
-        border-style: solid;
-        border-width: thin;
-        border-color: gray;
-        font-size: larger;
+        font-size: medium;
         display: flex;
-        justify-content: flex-end
+        justify-content: space-around
     }
 
     .row:nth-child(odd) {
@@ -31,58 +29,66 @@
 
 <h3>Final Test Report</h3>
 
-<div class="row" style="border:1px solid black;background-color:aliceblue">
-    <form asp-controller="ReportSerialNumbers" asp-action="ReportPostAsync" method="post">
-        <div class="form-row">
-            <div class="form-group col-sm-4">
-                <label asp-for="Siteid" class="control-label">Sites</label>
-                <select asp-for="Siteid" class="form-control">
-                    <option value="2">CL</option>
-                    <option value="8">Moko</option>
-                </select>
-            </div>
-            <div class="form-group col-sm-4">
-                <label asp-for="NumberOfDays" class="control-label">Days</label>
-                <input asp-for="NumberOfDays" class="form-control" />
-            </div>
-            <div class="form-group col-sm-4">
-                <label asp-for="HrOffset" class="control-label">Offset</label>
-                <input asp-for="HrOffset" class="form-control" />
-            </div>
+<div class="container" style="border:1px solid black;background-color:aliceblue;padding:10px">
+    <form class="form-inline" asp-controller="ReportSerialNumbers" asp-action="ReportPostAsync" method="post">
+        <div class="form-group">
+            <label>Sites: </label>
+            <select asp-for="Siteid" class="form-control">
+                <option value="2">CL</option>
+                <option value="8">Moko</option>
+            </select>
         </div>
-        <div class="form-group col-sm-12">
-            <button type="submit" value="submit" class="form-inline">Report</button>
+        <div class="form-group">
+            <label>Days: </label>
+            <input asp-for="NumberOfDays" class="form-control" style="text-align:center" />
         </div>
+        <div class="form-group">
+            <label>Offset</label>
+            <input asp-for="HrOffset" class="form-control" style="text-align:center" />
+        </div>
+        <button type="submit" class="btn btn-default" value="submit">Report</button>
     </form>
 </div>
-<br/>
 @if (Model.FinalTestCounts != null && Model.FinalTestCounts.Length > 0)
 {
-<div class="row" style="border:1px solid black">
-    <div class="col-sm-2 report_header">
-        <a asp-action="DownloadFile">Download</a>
-    </div>
-    <div class="col-sm-10" report_header style="align-self:center">
-        <label>Report for site @Model.Siteid, last @Model.NumberOfDays day(s), time offset @Model.HrOffset hr(s)</label>
-    </div>
-</div>
-
-    <div>
-        @foreach (var item in Model.FinalTestCounts)
-        {
-            <div class="row">
-                <div class="col-sm-9 report_header" style="justify-content:center">@item.Header.Sku, @item.Header.ProductName</div>
-                <div class="col-sm-3 report_header" style="justify-content:flex-end">Total = @item.Header.TotalCount</div>
+    <div class="container" style="padding:10px">
+        <div class="row">
+            <div class="col-sm-8">
+                <h4>Report for site @Model.Siteid, last @Model.NumberOfDays day(s), time offset @Model.HrOffset hr(s)</h4>
             </div>
+            <div class="col-sm-4" style="padding:10px">
+                <a asp-action="DownloadFile">Download</a>
+            </div>
+        </div>
+    </div>
+
+    @foreach (var item in Model.FinalTestCounts)
+    {
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-9 report_header" style="justify-content:center">
+                    @item.Header.Sku, @item.Header.ProductName
+                </div>
+                <div class="col-sm-3 report_header" style="justify-content:flex-end">
+                    Total = @item.Header.TotalCount
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
             @foreach (var subitem in item.Items)
             {
                 <div class="row">
-                    <div class="col-sm-6 report_sub" style="justify-content:center">@subitem.CreatedDate.ToShortDateString()</div>
-                    <div class="col-sm-6 report_sub" style="align-content:flex-end">@subitem.TotalCount</div>
+                    <div class="col-sm-10 report_sub" style="justify-content:space-around">
+                        @subitem.CreatedDate.ToShortDateString()
+                    </div>
+                    <div class="col-sm-2 report_sub" style="justify-content:flex-end">
+                        @subitem.TotalCount
+                    </div>
                 </div>
             }
             <br />
-        }
-    </div>
-}
+        </div>
+    }
 
+}
