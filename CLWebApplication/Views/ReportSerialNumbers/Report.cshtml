@@ -13,13 +13,11 @@
         font-style: italic;
         font-size: large;
         display: flex;
-        justify-content: space-around
     }
 
     .report_sub {
         font-size: medium;
         display: flex;
-        justify-content: space-around
     }
 
     .row:nth-child(odd) {
@@ -32,18 +30,15 @@
 <div class="container" style="border:1px solid black;background-color:aliceblue;padding:10px">
     <form class="form-inline" asp-controller="ReportSerialNumbers" asp-action="ReportPostAsync" method="post">
         <div class="form-group">
-            <label>Sites: </label>
-            <select asp-for="Siteid" class="form-control">
-                <option value="2">CL</option>
-                <option value="8">Moko</option>
-            </select>
+            <label asp-for="Siteid" class="control-label"></label>
+            <select asp-for="Siteid" class="form-control" asp-items="Html.GetEnumSelectList<FinalTestReport.Sites>()"></select>
         </div>
         <div class="form-group">
-            <label>Days: </label>
+            <label asp-for="NumberOfDays" class="control-label"></label>
             <input asp-for="NumberOfDays" class="form-control" style="text-align:center" />
         </div>
         <div class="form-group">
-            <label>Offset</label>
+            <label asp-for="HrOffset" class="control-label"></label>
             <input asp-for="HrOffset" class="form-control" style="text-align:center" />
         </div>
         <button type="submit" class="btn btn-default" value="submit">Report</button>
